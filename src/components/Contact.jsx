@@ -46,11 +46,28 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aqui você implementaria a lógica de envio para um servidor
-    console.log('Form data submitted:', formData);
+    
+    // Formatando a mensagem para o WhatsApp
+    const whatsappMessage = `*Nova mensagem do site PetAmigo*%0A%0A` +
+      `*Nome:* ${formData.name}%0A` +
+      `*Email:* ${formData.email}%0A` +
+      `*Telefone:* ${formData.phone}%0A` +
+      `*Tipo de Pet:* ${formData.petType}%0A` +
+      `*Serviço desejado:* ${formData.service}%0A` +
+      `*Mensagem:* ${formData.message}`;
+    
+    // Número de telefone para enviar (55 91 984494962)
+    const phoneNumber = '5591984494962';
+    
+    // Criando o link do WhatsApp
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
+    
+    // Abrindo o WhatsApp em uma nova aba
+    window.open(whatsappUrl, '_blank');
+    
     setFormSubmitted(true);
     
-    // Reset form after submission (for demo)
+    // Reset form after submission
     setTimeout(() => {
       setFormSubmitted(false);
       setFormData({
@@ -165,7 +182,7 @@ const Contact = () => {
               {formSubmitted ? (
                 <div className="bg-green-100 text-green-700 p-4 rounded-lg mb-6 animate-pulse">
                   <p className="font-medium">Mensagem enviada com sucesso!</p>
-                  <p>Entraremos em contato em breve.</p>
+                  <p>Você será redirecionado para o WhatsApp.</p>
                 </div>
               ) : null}
               
@@ -269,7 +286,7 @@ const Contact = () => {
                   type="submit"
                   className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-medium text-lg"
                 >
-                  Enviar Mensagem
+                  Enviar Mensagem via WhatsApp
                 </button>
               </form>
             </div>
